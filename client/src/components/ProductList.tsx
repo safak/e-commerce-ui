@@ -1,5 +1,9 @@
+import Categories from "./Categories";
+import ProductCard from "./ProductCard";
+import { ProductsType } from "./types";
+
 // TEMPORARY
-const products = [
+const products: ProductsType = [
   {
     id: 1,
     name: "Adidas CoreFit T-Shirt",
@@ -111,7 +115,16 @@ const products = [
 ];
 
 const ProductList = () => {
-  return <div>ProductList</div>;
+  return (
+    <div className="w-full">
+      <Categories />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-12">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default ProductList;

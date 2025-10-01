@@ -1,3 +1,4 @@
+import ProductList from "@/components/ProductList";
 import Image from "next/image";
 
 const Homepage = () => {
@@ -11,6 +12,7 @@ const Homepage = () => {
           className="object-cover -"
         />
       </div>
+      <ProductList />
     </div>
   );
 };
