@@ -1,9 +1,12 @@
 "use client"
+
+import { PaymentForm } from "@/components/PaymentForm";
+import ShippingForm from "@/components/ShippingForm";
 import { CartsType } from "@/types/types";
 import { ArrowRight, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const CartPage = () => {
   const steps = [
@@ -69,10 +72,11 @@ const CartPage = () => {
 
   const param = useSearchParams();
   const router = useRouter();
+  const [shippingForm, setShippingForm] = useState(null)
 
   const activeStep = parseInt(param.get("step") || "1")
   return (
-    <div className="flex flex-col gap-8 items-center justify-center mt-12">
+    <div className="flex flex-col gap-8 items-center justify-center my-12">
       <h1 className="text-2xl font-medium">Shopping Cart</h1>
       <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
         {steps.map((step) => (
@@ -147,17 +151,13 @@ const CartPage = () => {
                   </button>
                 </div>
               ))
-            : activeStep === 2 && (
-                <></>
-                // <ShippingForm setShippingForm={setShippingForm} />
-                //   ) : activeStep === 3 && shippingForm ? (
-                //     <PaymentForm />
-                //   ) : (
-                //     <p className="text-sm text-gray-500">
-                //       Please fill in the shipping form to continue.
-                //     </p>
-                //   )
-              )}
+            : activeStep === 2 ? (
+                <ShippingForm setShippingForm={setShippingForm}  />
+            ):(
+              activeStep === 3 && shippingForm ? (<PaymentForm />) : (<p className="text-sm text-gray-500">Please fill in the shipping form to continue.</p>)
+              
+            )
+            }
         </div>
         {/* Details */}
         <div className="w-full lg:w-5/12 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8 h-max">
@@ -177,7 +177,14 @@ const CartPage = () => {
             <hr className="border-gray-200" />
             <div className="flex justify-between">
               <p className="text-gray-800 font-semibold">Total</p>
+              <p className="font-medium">
+                $
+                {cartItem
+                  .reduce((acc, item) => acc + item.price * item.quantity, 0)
+                  .toFixed(2)}
+              </p>
             </div>
+             {activeStep === 1 && (
             <button
               onClick={() => router.push("/cart?step=2", { scroll: false })}
               className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2"
@@ -185,6 +192,7 @@ const CartPage = () => {
               Continue
               <ArrowRight className="w-3 h-3" />
             </button>
+          )}
           </div>
         </div>
       </div>
