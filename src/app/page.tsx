@@ -14,7 +14,7 @@ const Homepage = async ({
       <Image src={'/featured.png'} alt="featured image" fill />
       
     </div>
-    <ProductList category={category} params="homepage" />
+     <ProductList category={category} params="homepage" />
     </div>
   )
 }
