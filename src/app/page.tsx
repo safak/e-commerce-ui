@@ -1,12 +1,14 @@
 import Image from "next/image"
+import ProductList from "./components/ProductList"
 
 const Homepage = () => {
   return (
     <div className="">
       <div className="relative aspect-[3/1] mb-12">
-        <img src="featured.jpg" alt="featured Product" /><img/>
+        <Image  src="/featured.png" alt="featured Product" fill className="object-cover"/>
        </div>
-      </div>
+       <ProductList />
+    </div>
   )
 }
 
