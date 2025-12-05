@@ -11,7 +11,7 @@ import ProductCard from "./ProductCard"
         Description: "This is a comfortable and stylish t-shirt for everyday wear. It is made of 100% cotton and is very soft and comfortable to wear. It is a great t-shirt for everyday wear.",
         price: 100,
         sizes: "S, M, L, XL, XXL",
-        color: "Red, Blue, Green, Yellow",
+        color: "gray,orange, Green",
        
         images: [ "/products/1g.png", "/products/1gr.png", "/products/1p.png" ],
     },
@@ -23,7 +23,7 @@ import ProductCard from "./ProductCard"
         Description: "This is a comfortable and stylish t-shirt for everyday wear. It is made of 100% cotton and is very soft and comfortable to wear. It is a great t-shirt for everyday wear.",
         price: 200,
         sizes: "S, M, L, XL, XXL",
-        color: "Red, Blue, Green, Yellow",
+        color: "Green,Gray",
         images: [ "/products/2g.png", "/products/2gr.png" ],
     },
     {
@@ -96,6 +96,7 @@ const ProductList = () => {
                     <ProductCard key={product.id} product={product} />
                 ))}
             </div>
+            
         </div>
     )
 }
