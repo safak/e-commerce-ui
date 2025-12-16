@@ -12,7 +12,8 @@
     "lucide-react": "^0.555.0",
     "next": "15.4.5",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "react-hook-form": "^7.68.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

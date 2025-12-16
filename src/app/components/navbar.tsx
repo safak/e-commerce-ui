@@ -3,6 +3,7 @@ import Image from "next/image"
 import logo from "@/public/logo.png"
 import Searchbar from "./searchbar"
 import { Bell, ShoppingCart, Home } from "lucide-react"
+import ShoppingCartIcon from "./ShoppingCartIcon"
 const Navbar = () => {
   return (
     <nav className="flex justify-between items-center border-b pb-4 border-gray-200 w-full ">
@@ -20,7 +21,7 @@ const Navbar = () => {
       
       <Bell className="w-4 h-4 text-gray-600"/>
     
-      <ShoppingCart className="w-4 h-4 text-gray-600"/>
+      <ShoppingCartIcon/>
     
       
       <Link href="/login" className=" text-gray-600">Sign In
