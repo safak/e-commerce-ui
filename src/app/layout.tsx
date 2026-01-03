@@ -1,3 +1,6 @@
+import Navbar from "../components/Navbar"
+import Footer from "../components/Footer"
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -27,7 +30,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+      <div className="mx-auto p-4 sm:mx-w-xl md:max-w-2xl lg-max-w-3xl xl:-w-6xl">
+        <Navbar />
+         {children}
+        <Footer /> 
+      </div>
+        
       </body>
     </html>
   );
