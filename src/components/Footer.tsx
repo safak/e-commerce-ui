@@ -2,14 +2,13 @@ import  Link  from "next/link";
 import Image from "next/image"
 
 const Footer = () => {
-  
-  <div className="footer mt-16 flex flex-col items-center gap-8 md:flex-row md:items-start md: justify-between md:gap-0 bg-gray-800 rounded-lg">
+  return (
+  <div className="mt-16 flex flex-col items-center gap-8 md:flex-row md:items-start md:justify-between md:gap-0 bg-gray-800 p-8 rounded-lg">
     <div className="flex flex-col gap-4 items-center md:items-start">    
       <Link href="/" className="">
       <Image src="/logo.png" alt="TrendLama" width={36} height={36} 
       />
-      <p className="hidden md:block text-md font-medium tracking-wider">OTAKUARC.
-      </p>
+      <p className="hidden md:block text-md font-medium tracking-wider">OTAKUARC.</p>
       </Link>
       <p>© 2026 Trendlama.</p>
       <p>All rights reserved.</p>
@@ -37,5 +36,6 @@ const Footer = () => {
       <Link href="/">Affiliate Program</Link>
     </div>
   </div>
+  )
 }
 export default Footer;

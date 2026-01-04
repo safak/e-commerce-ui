@@ -2,7 +2,7 @@ import { Search } from "lucide-react"
 
 const SearchBar = () => {
   return (
-    <div className="SearchBar rounded-md ring-1 ring-gray-200 px-2 py-1 shadow-md">
+    <div className="hidden sm:flex items-center gap-2 rounded-md ring-1 ring-gray-200 px-2 py-1 shadow-md ">
       {/*
       icons from Lucide
       1- 'Lucide.dev/icons/' 
@@ -12,7 +12,7 @@ const SearchBar = () => {
       5- new terminal then paste the previous pnpm code
       6- now xopy the jsx code from Lucide and paste ot here it will be "<Search />"
       */}
-      <Search className="Search text-gray-400" />
+      <Search className="w-4 h-4 text-gray-600" />
       <input id="search" placeholder="Search..." className=" text-sm outline-0" />
       
     </div>

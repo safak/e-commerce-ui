@@ -12,7 +12,7 @@ const products: ProductsType = [
     description: "High-quality CoreFit T-shirt from Adidas",
     price: 39.9,
     sizes: ["S", "M", "L", "XL", "XXL"],
-    colors: ["Gray", "Purple", "Green"],
+    colors: ["gray", "purple", "green"],
     images: {
       gray: "/products/1g.png",
       purple: "/products/1p.png",
@@ -26,11 +26,10 @@ const products: ProductsType = [
     description: "High-quality Air Max Hoodie from Nike",
     price: 59.9,
     sizes: ["M", "L", "XL", "XXL"],
-    colors: ["Black", "White", "Red"],
+    colors: ["gray", "green"],
     images: {
-      black: "/products/2b.png",
-      white: "/products/2w.png",
-      red: "/products/2r.png",
+      gray: "/products/2g.png",
+      green: "/products/2gr.png",
     },
   },
   {
@@ -40,11 +39,10 @@ const products: ProductsType = [
     description: "High-quality Future Rider Hoodie from Puma",
     price: 49.9,
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Blue", "Green", "Yellow"],
+    colors: ["blue", "black"],
     images: {
-      blue: "/products/3bl.png",
-      green: "/products/3g.png",
-      yellow: "/products/3y.png",
+      blue: "/products/3b.png",
+      black: "/products/3bl.png",
     },
   },
   {
@@ -54,10 +52,9 @@ const products: ProductsType = [
     description: "High-quality Classic T-shirt from Reebok",
     price: 29.9,
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Gray", "Black", "White"],
+    colors: ["pink",  "white"],
     images: {
-      gray: "/products/4g.png",
-      black: "/products/4b.png",
+      pink: "/products/4p.png",
       white: "/products/4w.png",
     },
   },
@@ -68,10 +65,10 @@ const products: ProductsType = [
     description: "High-quality UltraBoost Hoodie from Adidas",
     price: 69.9,
     sizes: ["M", "L", "XL", "XXL"],
-    colors: ["Black", "White", "Red"],
+    colors: ["black", "orange", "red"],
     images: {
-      black: "/products/5b.png",
-      white: "/products/5w.png",
+      black: "/products/5bl.png",
+      orange: "/products/5o.png",
       red: "/products/5r.png",
     },
   },
@@ -82,11 +79,10 @@ const products: ProductsType = [
     description: "High-quality Dri-FIT T-shirt from Nike",
     price: 39.9,
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Blue", "Green", "Yellow"],
-    images: {
-      blue: "/products/6bl.png",
+    colors: ["green", "white"],
+    images: { 
       green: "/products/6g.png",
-      yellow: "/products/6y.png",
+      white: "/products/6w.png",
     },
   },
   {
@@ -96,11 +92,10 @@ const products: ProductsType = [
     description: "High-quality Suede Hoodie from Puma",
     price: 59.9,
     sizes: ["M", "L", "XL", "XXL"],
-    colors: ["Black", "White", "Red"],
+    colors: ["green", "pink"],
     images: {
-      black: "/products/7b.png",
-      white: "/products/7w.png",
-      red: "/products/7r.png",
+      green: "/products/7g.png",
+      pink: "/products/7p.png",
     },
   },
   {
@@ -110,11 +105,10 @@ const products: ProductsType = [
     description: "High-quality Speed T-shirt from Reebok",
     price: 29.9,
     sizes: ["S", "M", "L", "XL"],
-    colors: ["Gray", "Black", "White"],
-    images: {
-      gray: "/products/8g.png",
+    colors: ["black", "green"],
+    images: { 
       black: "/products/8b.png",
-      white: "/products/8w.png",
+      green: "/products/8gr.png",
     },
   },
 ];
@@ -123,7 +117,7 @@ const ProductList = ({category}: {category:string}) => {
   return (
     <div className="w-full">
       <Categories />
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12">
+      <div className=" grid grid-cols-1 max-md:grid-cols-2 max-md:gap-x-2 max-md:gap-y-4 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-12">
         {products.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}

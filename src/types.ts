@@ -6,7 +6,7 @@ export type ProductType = {
   price: number;
   sizes: string[];
   colors: string[];
-  images: Record<string,string>;
+  images: Record<string, string>;
 }
 
 export type ProductsType = ProductType[];
