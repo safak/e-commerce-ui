@@ -11,7 +11,7 @@ const PaymentForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<PaymentFormInputs>({
-    resolver: zodResolver(paymentFormSchema),
+    resolver: zodResolver(paymentFormSchema as any),
   });
 
   const router = useRouter();
@@ -26,11 +26,11 @@ const PaymentForm = () => {
       onSubmit={handleSubmit(handlePaymentForm)}
     >
       <div className="flex flex-col gap-1">
-        <label htmlFor="cardHolder" className="text-xs text-gray-500 font-medium">
+        <label htmlFor="cardHolder" className="text-xs text-[#7B7263] font-medium">
           Name on card
         </label>
         <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
+          className="border-b border-[#7B7263] py-2 outline-none text-sm"
           type="text"
           id="cardHolder"
           placeholder="John Doe"
@@ -41,11 +41,11 @@ const PaymentForm = () => {
         )}
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="cardNumber" className="text-xs text-gray-500 font-medium">
+        <label htmlFor="cardNumber" className="text-xs text-[#7B7263] font-medium">
           Card Number
         </label>
         <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
+          className="border-b border-[#7B7263] py-2 outline-none text-sm"
           type="text"
           id="cardNumber"
           placeholder="123456789123"
@@ -56,11 +56,11 @@ const PaymentForm = () => {
         )}
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="expirationDate" className="text-xs text-gray-500 font-medium">
+        <label htmlFor="expirationDate" className="text-xs text-[#7B7263] font-medium">
           Expiration Date
         </label>
         <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
+          className="border-b border-[#7B7263] py-2 outline-none text-sm"
           type="text"
           id="expirationDate"
           placeholder="01/32"
@@ -71,11 +71,11 @@ const PaymentForm = () => {
         )}
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="cvv" className="text-xs text-gray-500 font-medium">
+        <label htmlFor="cvv" className="text-xs text-[#7B7263] font-medium">
           CVV
         </label>
         <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
+          className="border-b border-[#7B7263] py-2 outline-none text-sm"
           type="text"
           id="cvv"
           placeholder="123"
@@ -92,7 +92,7 @@ const PaymentForm = () => {
       </div>
       <button
         type="submit"
-        className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2"
+        className="w-full bg-[#7B7263] hover:bg-[#5C5B4F] transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2"
       >
         Checkout
         <ShoppingCart className="w-3 h-3" />
