@@ -14,12 +14,12 @@ const Filter = () => {
   };
 
   return (
-    <div className="flex items-center justify-end gap-2 text-sm text-gray-500 my-6">
+    <div className="flex items-center justify-end gap-2 text-sm text-[#64113F] my-6">
       <span>Sort by:</span>
       <select
         name="sort"
         id="sort"
-        className="ring-1 ring-gray-200 shadow-md p-1 rounded-sm"
+        className="ring-1 ring-[#64113F] shadow-md p-1 rounded-sm"
         onChange={(e) => handleFilter(e.target.value)}
       >
         <option value="newest">Newest</option>

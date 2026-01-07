@@ -9,6 +9,8 @@ export type ProductType = {
   sizes: string[];
   colors: string[];
   images: Record<string, string>;
+  colorStripe: Record<string, string>;
+  stripeLink ?: string;
 };
 
 export type ProductsType = ProductType[];
