@@ -60,6 +60,7 @@ const Categories = () => {
   // to navigate and push path to URL
   const pathname = usePathname();
   // return the current URL path
+  
   const selectedCategory = searchParams.get("category");
     // return the value of category {category: value}
     
