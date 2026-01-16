@@ -10,7 +10,7 @@ const ProductsPage = async ({
     return (
         <div className="">
             <p>HI</p>
-            <ProductList category={category} />
+            <ProductList category={category} params="products" />
         </div>
     )
 }
