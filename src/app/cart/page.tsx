@@ -77,6 +77,7 @@ const cartItems: CartItemsType = [
 const CartPage = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
+
     const [shippingForm, setShippingForm] = useState(null);
 
     const activeStep = parseInt(searchParams.get("step") || "1");
@@ -126,7 +127,7 @@ const CartPage = () => {
                         </div>
                         ))
                     ) : activeStep === 2 ? ( 
-                    <ShippingForm /> 
+                    <ShippingForm setShippingForm={setShippingForm} /> 
                     ) : activeStep === 3 && shippingForm ? (
                     <PaymentForm /> 
                     ) : (
@@ -171,10 +172,12 @@ const CartPage = () => {
                             </p>
                         </div>
                     </div>
-                    {activeStep === 1 && <button onClick={() => router.push("/cart?step=2", {scroll:false})} className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2">
+                    {activeStep === 1 && (
+                        <button onClick={() => router.push("/cart?step=2", {scroll:false})} className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2">
                         Countinue 
                         <ArrowRight className="w-3 h-3" />
-                    </button>}
+                    </button>
+                )}
                 </div>
             </div>
         </div>
