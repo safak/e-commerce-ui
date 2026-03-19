@@ -18,7 +18,9 @@ const Footer = () => {
           </p>
         </Link>
 
-        <p className="text-sm text-gray-400">© 2023 TRENDLAMA.</p>
+        <p className="text-sm text-gray-400">
+          © {new Date().getFullYear()} TRENDLAMA.
+        </p>
         <p className="text-sm text-gray-400">All rights reserved.</p>
       </div>
       <div className="flex flex-col gap-4 text-sm text-gray-400 items-center md:items-start">
