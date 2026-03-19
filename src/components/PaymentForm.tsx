@@ -1,22 +1,28 @@
 import React from "react";
-import { ShippingFormInputs, shippingFormSchema } from "@/types";
+import {
+  PaymentFormInputs,
+  paymentFormSchema,
+  ShippingFormInputs,
+  shippingFormSchema,
+} from "@/types";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const PaymentForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ShippingFormInputs>({
-    resolver: zodResolver(shippingFormSchema),
+  } = useForm<PaymentFormInputs>({
+    resolver: zodResolver(paymentFormSchema),
   });
 
   const router = useRouter();
 
-  const handlePaymentForm: SubmitHandler<ShippingFormInputs> = (data) => {};
+  const handlePaymentForm: SubmitHandler<PaymentFormInputs> = (data) => {};
 
   return (
     <form
@@ -25,74 +31,108 @@ const PaymentForm = () => {
     >
       {/* 姓名 */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
-          Name
+        <label
+          htmlFor="cardHolder"
+          className="text-xs text-gray-500 font-medium"
+        >
+          Name on card
         </label>
         <input
           type="text"
-          id="name"
+          id="cardHolder"
           className="border-b border-gray-200 py-2 outline-none text-sm"
           placeholder="John Doe"
-          {...register("name")}
+          {...register("cardHolder")}
         />
-        {errors.name && (
-          <p className="text-sm text-red-500">{errors.name.message}</p>
+        {errors.cardHolder && (
+          <p className="text-sm text-red-500">{errors.cardHolder.message}</p>
         )}
       </div>
-      {/* 电话号码 */}
+      {/* 卡号 */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="phone" className="text-xs text-gray-500 font-medium">
-          Phone
+        <label
+          htmlFor="cardNumber"
+          className="text-xs text-gray-500 font-medium"
+        >
+          Card Number
         </label>
         <input
           type="text"
-          id="phone"
+          id="cardNumber"
           className="border-b border-gray-200 py-2 outline-none text-sm"
-          placeholder="123-456-7890"
-          {...register("phone")}
+          placeholder="123456789"
+          {...register("cardNumber")}
         />
-        {errors.phone && (
-          <p className="text-sm text-red-500">{errors.phone.message}</p>
+        {errors.cardNumber && (
+          <p className="text-sm text-red-500">{errors.cardNumber.message}</p>
         )}
       </div>
-      {/* 地址 */}
+      {/* 过期时间 */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="address" className="text-xs text-gray-500 font-medium">
-          Address
+        <label
+          htmlFor="expirationDate"
+          className="text-xs text-gray-500 font-medium"
+        >
+          Expiration Date
         </label>
         <input
           type="text"
-          id="address"
+          id="expirationDate"
           className="border-b border-gray-200 py-2 outline-none text-sm"
-          placeholder="123 Abbey Road"
-          {...register("address")}
+          placeholder="01/32"
+          {...register("expirationDate")}
         />
-        {errors.address && (
-          <p className="text-sm text-red-500">{errors.address.message}</p>
+        {errors.expirationDate && (
+          <p className="text-sm text-red-500">
+            {errors.expirationDate.message}
+          </p>
         )}
       </div>
-      {/* 城市（看能不能调用api，然后选择城市） */}
+      {/* CVV */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="city" className="text-xs text-gray-500 font-medium">
-          City
+        <label htmlFor="cvv" className="text-xs text-gray-500 font-medium">
+          CVV
         </label>
         <input
           type="text"
-          id="city"
+          id="cvv"
           className="border-b border-gray-200 py-2 outline-none text-sm"
-          placeholder="New York"
-          {...register("city")}
+          placeholder="123"
+          {...register("cvv")}
         />
-        {errors.city && (
-          <p className="text-sm text-red-500">{errors.city.message}</p>
+        {errors.cvv && (
+          <p className="text-sm text-red-500">{errors.cvv.message}</p>
         )}
+      </div>
+      <div className="flex item-center gap-2 mt-4">
+        <Image
+          src="/klarna.png"
+          alt="klarna"
+          width={50}
+          height={25}
+          className="rounded-md"
+        />
+        <Image
+          src="/cards.png"
+          alt="cards"
+          width={50}
+          height={25}
+          className="rounded-md"
+        />
+        <Image
+          src="/stripe.png"
+          alt="stripe"
+          width={50}
+          height={25}
+          className="rounded-md"
+        />
       </div>
       <button
         type="submit"
         className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2"
       >
-        Continue
-        <ArrowRight className="w-3 h-3" />
+        Checkout
+        <ShoppingCart className="w-3 h-3" />
       </button>
     </form>
   );
