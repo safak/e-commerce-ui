@@ -1,3 +1,4 @@
+// 产品type
 export type ProductType = {
   id: string | number;
   name: string;
@@ -8,3 +9,12 @@ export type ProductType = {
   colors: string[];
   images: Record<string, string>;
 };
+
+// 购物车type
+export type CartItemType = ProductType & {
+  quantity: number;
+  selectedSize: string;
+  selectedColor: string;
+};
+
+export type CartItem = CartItemType[];
