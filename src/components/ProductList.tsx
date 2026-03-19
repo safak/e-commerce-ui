@@ -2,6 +2,7 @@ import { ProductType } from "@/types";
 import ProductCard from "./ProductCard";
 import Link from "next/link";
 import Categories from "./Categories";
+import Filter from "./Filter";
 
 const products: ProductType[] = [
   {
@@ -20,10 +21,17 @@ const products: ProductType[] = [
     },
   },
 ];
-const ProductList = ({ category }: { category: string }) => {
+const ProductList = ({
+  category,
+  params,
+}: {
+  category: string;
+  params: "homepage" | "products";
+}) => {
   return (
     <div className="w-full">
       <Categories />
+      {params === "products" && <Filter />}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12">
         {products.map((product) => {
           return <ProductCard key={product.id} product={product} />;
