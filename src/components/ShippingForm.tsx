@@ -1,125 +1,105 @@
-"use client";
+import React from "react";
+import { ShippingFormInputs, shippingFormSchema } from "@/types";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-import React, { useState } from "react";
-
-type ShippingFormValues = {
-  fullName: string;
-  email: string;
-  address: string;
-  city: string;
-  postalCode: string;
-};
-
-type ShippingFormProps = {
-  onSubmit?: (values: ShippingFormValues) => void;
-};
-
-const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
-  const [formValues, setFormValues] = useState<ShippingFormValues>({
-    fullName: "",
-    email: "",
-    address: "",
-    city: "",
-    postalCode: "",
+const ShippingForm = ({
+  setShippingForm,
+}: {
+  setShippingForm: (data: ShippingFormInputs) => void;
+}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ShippingFormInputs>({
+    resolver: zodResolver(shippingFormSchema),
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormValues((current) => ({ ...current, [name]: value }));
-  };
+  const router = useRouter();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    onSubmit?.(formValues);
+  const handleShippingForm: SubmitHandler<ShippingFormInputs> = (data) => {
+    setShippingForm(data);
+    router.push("/cart?step=3", { scroll: false });
   };
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
-          Full Name
+    <form
+      className="flex flex-col gap-4 "
+      onSubmit={handleSubmit(handleShippingForm)}
+    >
+      {/* 姓名 */}
+      <div className="flex flex-col gap-1">
+        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
+          Name
         </label>
         <input
-          id="fullName"
-          name="fullName"
           type="text"
-          value={formValues.fullName}
-          onChange={handleChange}
-          className="rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-gray-400"
+          id="name"
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           placeholder="John Doe"
-          required
+          {...register("name")}
         />
+        {errors.name && (
+          <p className="text-sm text-red-500">{errors.name.message}</p>
+        )}
       </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="email" className="text-sm font-medium text-gray-700">
-          Email
+      {/* 电话号码 */}
+      <div className="flex flex-col gap-1">
+        <label htmlFor="phone" className="text-xs text-gray-500 font-medium">
+          Phone
         </label>
         <input
-          id="email"
-          name="email"
-          type="email"
-          value={formValues.email}
-          onChange={handleChange}
-          className="rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-gray-400"
-          placeholder="john@example.com"
-          required
+          type="text"
+          id="phone"
+          className="border-b border-gray-200 py-2 outline-none text-sm"
+          placeholder="123-456-7890"
+          {...register("phone")}
         />
+        {errors.phone && (
+          <p className="text-sm text-red-500">{errors.phone.message}</p>
+        )}
       </div>
-      <div className="flex flex-col gap-2">
-        <label htmlFor="address" className="text-sm font-medium text-gray-700">
+      {/* 地址 */}
+      <div className="flex flex-col gap-1">
+        <label htmlFor="address" className="text-xs text-gray-500 font-medium">
           Address
         </label>
         <input
-          id="address"
-          name="address"
           type="text"
-          value={formValues.address}
-          onChange={handleChange}
-          className="rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-gray-400"
-          placeholder="123 Main Street"
-          required
+          id="address"
+          className="border-b border-gray-200 py-2 outline-none text-sm"
+          placeholder="123 Abbey Road"
+          {...register("address")}
         />
+        {errors.address && (
+          <p className="text-sm text-red-500">{errors.address.message}</p>
+        )}
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="city" className="text-sm font-medium text-gray-700">
-            City
-          </label>
-          <input
-            id="city"
-            name="city"
-            type="text"
-            value={formValues.city}
-            onChange={handleChange}
-            className="rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-gray-400"
-            placeholder="Shanghai"
-            required
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="postalCode"
-            className="text-sm font-medium text-gray-700"
-          >
-            Postal Code
-          </label>
-          <input
-            id="postalCode"
-            name="postalCode"
-            type="text"
-            value={formValues.postalCode}
-            onChange={handleChange}
-            className="rounded-lg border border-gray-200 px-4 py-3 outline-none focus:border-gray-400"
-            placeholder="200000"
-            required
-          />
-        </div>
+      {/* 城市（看能不能调用api，然后选择城市） */}
+      <div className="flex flex-col gap-1">
+        <label htmlFor="city" className="text-xs text-gray-500 font-medium">
+          City
+        </label>
+        <input
+          type="text"
+          id="city"
+          className="border-b border-gray-200 py-2 outline-none text-sm"
+          placeholder="New York"
+          {...register("city")}
+        />
+        {errors.city && (
+          <p className="text-sm text-red-500">{errors.city.message}</p>
+        )}
       </div>
       <button
         type="submit"
-        className="mt-2 rounded-lg bg-gray-800 p-3 text-white transition-all duration-300 hover:bg-gray-900"
+        className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2"
       >
-        Continue to Payment
+        Continue
+        <ArrowRight className="w-3 h-3" />
       </button>
     </form>
   );

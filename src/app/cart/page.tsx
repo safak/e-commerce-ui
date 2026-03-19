@@ -5,6 +5,7 @@ import { ArrowRight, Trash2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import Image from "next/image";
+import { ShippingFormInputs } from "@/types";
 
 const steps = [
   {
@@ -61,23 +62,9 @@ const CartItems: CartItem[] = [
 const CartPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [shippingForm, setShippingForm] = useState<{
-    fullName: string;
-    email: string;
-    address: string;
-    city: string;
-    postalCode: string;
-  } | null>(null);
-  const handleShippingSubmit = (formData: {
-    fullName: string;
-    email: string;
-    address: string;
-    city: string;
-    postalCode: string;
-  }) => {
-    setShippingForm(formData);
-    router.push("/cart?step=3", { scroll: false });
-  };
+  const [shippingForm, setShippingForm] = useState<ShippingFormInputs | null>(
+    null,
+  );
 
   const activeStep = parseInt(searchParams.get("step") || "1");
   return (
@@ -153,7 +140,7 @@ const CartPage = () => {
               </div>
             ))
           ) : activeStep === 2 ? (
-            <ShippingForm onSubmit={handleShippingSubmit} />
+            <ShippingForm setShippingForm={setShippingForm} />
           ) : activeStep === 3 && shippingForm ? (
             <PaymentForm />
           ) : (
