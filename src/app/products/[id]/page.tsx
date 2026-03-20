@@ -17,6 +17,21 @@ const product = {
   },
 };
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params;
+
+  // TODO: get the product from db
+  // TEMPORARY (这里使用的是你之前定义的 product mock 数据)
+  return {
+    title: product.name,
+    description: product.description,
+  };
+};
+
 const ProductPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
