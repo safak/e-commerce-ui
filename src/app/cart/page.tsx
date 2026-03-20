@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import Image from "next/image";
 import { ShippingFormInputs } from "@/types";
+import useCartStore from "@/stores/cartStore";
 
 const steps = [
   {
@@ -38,26 +39,26 @@ type CartItem = {
   selectedColor: ProductColor;
 };
 
-const CartItems: CartItem[] = [
-  {
-    id: 1,
-    name: "iPhone 13 Pro",
-    shortDescription: "The latest iPhone with A15 Bionic chip",
-    description:
-      "The iPhone 13 Pro features a 6.1-inch Super Retina XDR display, A15 Bionic chip, Pro camera system with Night mode, and up to 22 hours of battery life.",
-    price: 999,
-    sizes: ["128GB", "256GB", "512GB", "1TB"],
-    colors: ["gray", "purple", "green"],
-    images: {
-      gray: "/products/1g.png",
-      purple: "/products/1p.png",
-      green: "/products/1gr.png",
-    },
-    quantity: 1,
-    selectedSize: "256GB",
-    selectedColor: "purple",
-  },
-];
+// const CartItems: CartItem[] = [
+//   {
+//     id: 1,
+//     name: "iPhone 13 Pro",
+//     shortDescription: "The latest iPhone with A15 Bionic chip",
+//     description:
+//       "The iPhone 13 Pro features a 6.1-inch Super Retina XDR display, A15 Bionic chip, Pro camera system with Night mode, and up to 22 hours of battery life.",
+//     price: 999,
+//     sizes: ["128GB", "256GB", "512GB", "1TB"],
+//     colors: ["gray", "purple", "green"],
+//     images: {
+//       gray: "/products/1g.png",
+//       purple: "/products/1p.png",
+//       green: "/products/1gr.png",
+//     },
+//     quantity: 1,
+//     selectedSize: "256GB",
+//     selectedColor: "purple",
+//   },
+// ];
 
 const CartPage = () => {
   const searchParams = useSearchParams();
@@ -67,6 +68,8 @@ const CartPage = () => {
   );
 
   const activeStep = parseInt(searchParams.get("step") || "1");
+  // 导入购物车和移除购物车函数
+  const { cart, removeFromCart } = useCartStore();
   return (
     <div className="flex flex-col gap-8 items-center justify-center mt-12">
       {/* 标题 */}
@@ -96,9 +99,12 @@ const CartPage = () => {
         {/* 步骤 */}
         <div className="w-full lg:w-7/12 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
           {activeStep === 1 ? (
-            CartItems.map((item) => (
+            cart.map((item) => (
               // 单一商品
-              <div className="flex items-center justify-between" key={item.id}>
+              <div
+                className="flex items-center justify-between"
+                key={item.id + item.selectedSize + item.selectedColor}
+              >
                 {/* 图片以及细节 */}
                 <div className="flex items-center gap-8">
                   {/* 商品图片 */}
@@ -133,7 +139,7 @@ const CartPage = () => {
                 {/* 删除按钮 */}
                 <button
                   className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center hover:bg-red-200 transition-all duration-300 text-red-400"
-                  onClick={() => alert("Remove item")}
+                  onClick={() => removeFromCart(item)}
                 >
                   <Trash2 className="w-4 h-4 text-gray-500" />
                 </button>
@@ -158,10 +164,12 @@ const CartPage = () => {
               <p className="text-semibold text-gray-500">Subtotal</p>
               <p className="font-medium">
                 $
-                {CartItems.reduce(
-                  (total, item) => total + item.price * item.quantity,
-                  0,
-                ).toFixed(2)}
+                {cart
+                  .reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0,
+                  )
+                  .toFixed(2)}
               </p>
             </div>
             <hr className="border-gray-200" />
@@ -170,10 +178,12 @@ const CartPage = () => {
               <p className="text-semibold text-gray-800">Total</p>
               <p className="font-medium">
                 $
-                {CartItems.reduce(
-                  (total, item) => total + item.price * item.quantity,
-                  0,
-                ).toFixed(2)}
+                {cart
+                  .reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0,
+                  )
+                  .toFixed(2)}
               </p>
             </div>
           </div>
