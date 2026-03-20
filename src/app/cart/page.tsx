@@ -23,42 +23,15 @@ const steps = [
   },
 ];
 
-type ProductColor = "gray" | "purple" | "green";
-
 type CartItem = {
   id: number;
   name: string;
   shortDescription: string;
   description: string;
   price: number;
-  sizes: string[];
-  colors: ProductColor[];
-  images: Record<ProductColor, string>;
+  images: Record<number, string>;
   quantity: number;
-  selectedSize: string;
-  selectedColor: ProductColor;
 };
-
-// const CartItems: CartItem[] = [
-//   {
-//     id: 1,
-//     name: "iPhone 13 Pro",
-//     shortDescription: "The latest iPhone with A15 Bionic chip",
-//     description:
-//       "The iPhone 13 Pro features a 6.1-inch Super Retina XDR display, A15 Bionic chip, Pro camera system with Night mode, and up to 22 hours of battery life.",
-//     price: 999,
-//     sizes: ["128GB", "256GB", "512GB", "1TB"],
-//     colors: ["gray", "purple", "green"],
-//     images: {
-//       gray: "/products/1g.png",
-//       purple: "/products/1p.png",
-//       green: "/products/1gr.png",
-//     },
-//     quantity: 1,
-//     selectedSize: "256GB",
-//     selectedColor: "purple",
-//   },
-// ];
 
 const CartPage = () => {
   const searchParams = useSearchParams();
@@ -101,16 +74,13 @@ const CartPage = () => {
           {activeStep === 1 ? (
             cart.map((item) => (
               // 单一商品
-              <div
-                className="flex items-center justify-between"
-                key={item.id + item.selectedSize + item.selectedColor}
-              >
+              <div className="flex items-center justify-between" key={item.id}>
                 {/* 图片以及细节 */}
                 <div className="flex items-center gap-8">
                   {/* 商品图片 */}
                   <div className="relative w-32 h-32 bg-gray-50 rounded-lg overflow-hidden">
                     <Image
-                      src={item.images[item.selectedColor]}
+                      src={item.images[item.id]}
                       alt={item.name}
                       fill
                       className="w-16 h-16 object-contain"
@@ -123,14 +93,6 @@ const CartPage = () => {
                       <p className="text-xs text-gray-500">
                         Quantity:{""}
                         {item.quantity}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Size:{""}
-                        {item.selectedSize}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        Color:{""}
-                        {item.selectedColor}
                       </p>
                     </div>
                     <p className="font-medium">${item.price.toFixed(2)}</p>

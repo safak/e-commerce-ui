@@ -12,12 +12,10 @@ const products: ProductType[] = [
     description:
       "The iPhone 13 Pro features a 6.1-inch Super Retina XDR display, A15 Bionic chip, Pro camera system with Night mode, and up to 22 hours of battery life.",
     price: 999,
-    sizes: ["128GB", "256GB", "512GB", "1TB"],
-    colors: ["gray", "purple", "green"],
     images: {
-      gray: "/products/1g.png",
-      purple: "/products/1p.png",
-      green: "/products/1gr.png",
+      0: "/products/1g.png",
+      1: "/products/1p.png",
+      2: "/products/1gr.png",
     },
   },
 ];

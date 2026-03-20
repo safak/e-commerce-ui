@@ -7,16 +7,12 @@ export type ProductType = {
   shortDescription: string;
   description: string;
   price: number;
-  sizes: string[];
-  colors: string[];
   images: Record<string, string>;
 };
 
 // 购物车type
 export type CartItemType = ProductType & {
   quantity: number;
-  selectedSize: string;
-  selectedColor: string;
 };
 
 export type CartItem = CartItemType[];

@@ -10,10 +10,7 @@ const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
       addToCart: (product) =>
         set((state) => {
           const existingProductIndex = state.cart.findIndex(
-            (p) =>
-              p.id === product.id &&
-              p.selectedSize === product.selectedSize &&
-              p.selectedColor === product.selectedColor,
+            (p) => p.id === product.id,
           );
           if (existingProductIndex !== -1) {
             // 产品已存在，更新数量
@@ -27,9 +24,7 @@ const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
                 ...state.cart,
                 {
                   ...product,
-                  quantity: product.quantity,
-                  selectedSize: product.selectedSize,
-                  selectedColor: product.selectedColor,
+                  quantity: product.quantity || 1,
                 },
               ],
             };
@@ -37,12 +32,7 @@ const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
         }),
       removeFromCart: (product) =>
         set((state) => ({
-          cart: state.cart.filter(
-            (item) =>
-              item.id === product.id &&
-              item.selectedSize === product.selectedSize &&
-              item.selectedColor === product.selectedColor,
-          ),
+          cart: state.cart.filter((item) => item.id !== product.id),
         })),
       clearCart: () => set({ cart: [] }),
     }),
