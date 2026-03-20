@@ -5,15 +5,33 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { ShoppingCart } from "lucide-react";
+import useCartStore from "@/stores/cartStore";
+import { toast } from "react-toastify";
 
+// 产品卡片组件
 const ProductCard = ({ product }: { product: ProductType }) => {
   const [productType, setProductType] = React.useState({
     size: product.sizes[0],
     color: product.colors[0],
   });
 
+  // 引用加入购物车的函数(原始版)
+  const { addToCart } = useCartStore();
+
   const handleProductType = (type: "size" | "color", value: string) => {
     setProductType((prev) => ({ ...prev, [type]: value }));
+  };
+
+  // 加入购物车函数（详细版）
+  const handleAddToCart = () => {
+    addToCart({
+      ...product,
+      quantity: 1,
+      selectedSize: productType.size,
+      selectedColor: productType.color,
+    });
+    // 通知
+    toast.success("Product added to cart!");
   };
 
   return (
@@ -80,7 +98,10 @@ const ProductCard = ({ product }: { product: ProductType }) => {
         {/* 产品价格以及加入购物车按钮 */}
         <div className="flex items-center justify-between">
           <span className="font-medium">${product.price.toFixed(2)}</span>
-          <button className="ring ring-gray-200 shadow-lg  text-sm px-2 py-1 cursor:pointer rounded-md hover:text-white hover:bg-black transition-all duration-300 flex items-center gap-2">
+          <button
+            onClick={() => handleAddToCart()}
+            className="ring ring-gray-200 shadow-lg  text-sm px-2 py-1 cursor:pointer rounded-md hover:text-white hover:bg-black transition-all duration-300 flex items-center gap-2"
+          >
             <ShoppingCart className="w-4 h-4" />
             Add to Cart
           </button>
