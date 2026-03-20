@@ -6,7 +6,11 @@ import Link from "next/link";
 import React from "react";
 
 const ShoppingCartIcon = () => {
-  const { cart } = useCartStore();
+  const { cart, hasHydrated } = useCartStore();
+
+  if (!hasHydrated) {
+    return null;
+  }
   return (
     <Link href="/cart" className="relative">
       <ShoppingCart className="w-4 h-4 text-gray-600" />
