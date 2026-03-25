@@ -1,8 +1,9 @@
-import { ProductType } from "@/types";
+import { ProductType } from "@repo/types";
 import ProductCard from "./ProductCard";
 import Link from "next/link";
 import Categories from "./Categories";
 import Filter from "./Filter";
+import React from "react";
 
 const products: ProductType[] = [
   {
@@ -17,6 +18,9 @@ const products: ProductType[] = [
       1: "/products/1p.png",
       2: "/products/1gr.png",
     },
+    categorySlug: "test",
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
 const ProductList = ({

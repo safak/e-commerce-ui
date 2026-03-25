@@ -1,0 +1,36 @@
+
+> client@0.1.0 check-types C:\Users\23660\ECOM\microservices-ecommerce\apps\client
+> tsc --noEmit
+
+src/app/cart/page.tsx(2,25): error TS2307: Cannot find module '@/components/PaymentForm' or its corresponding type declarations.
+src/app/cart/page.tsx(3,26): error TS2307: Cannot find module '@/components/ShippingForm' or its corresponding type declarations.
+src/app/cart/page.tsx(8,36): error TS2307: Cannot find module '@/types' or its corresponding type declarations.
+src/app/cart/page.tsx(9,26): error TS2307: Cannot find module '@/stores/cartStore' or its corresponding type declarations.
+src/app/cart/page.tsx(75,23): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/app/cart/page.tsx(131,22): error TS7006: Parameter 'total' implicitly has an 'any' type.
+src/app/cart/page.tsx(131,29): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/app/cart/page.tsx(145,22): error TS7006: Parameter 'total' implicitly has an 'any' type.
+src/app/cart/page.tsx(145,29): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/app/layout.tsx(4,20): error TS2307: Cannot find module '@/components/Navbar' or its corresponding type declarations.
+src/app/layout.tsx(5,20): error TS2307: Cannot find module '@/components/Footer' or its corresponding type declarations.
+src/app/page.tsx(1,25): error TS2307: Cannot find module '@/components/ProductList' or its corresponding type declarations.
+src/app/products/[id]/page.tsx(3,32): error TS2307: Cannot find module '@/components/ProductInteraction' or its corresponding type declarations.
+src/app/products/page.tsx(1,25): error TS2307: Cannot find module '@/components/ProductList' or its corresponding type declarations.
+src/components/PaymentForm.tsx(7,8): error TS2307: Cannot find module '@/types' or its corresponding type declarations.
+src/components/ProductCard.tsx(3,29): error TS2307: Cannot find module '@/types' or its corresponding type declarations.
+src/components/ProductCard.tsx(8,26): error TS2307: Cannot find module '@/stores/cartStore' or its corresponding type declarations.
+src/components/ProductInteraction.tsx(2,26): error TS2307: Cannot find module '@/stores/cartStore' or its corresponding type declarations.
+src/components/ProductInteraction.tsx(3,29): error TS2307: Cannot find module '@/types' or its corresponding type declarations.
+src/components/ProductList.tsx(1,29): error TS2307: Cannot find module '@/types' or its corresponding type declarations.
+src/components/ShippingForm.tsx(2,56): error TS2307: Cannot find module '@/types' or its corresponding type declarations.
+src/components/ShoppingCartIcon.tsx(3,26): error TS2307: Cannot find module '@/stores/cartStore' or its corresponding type declarations.
+src/components/ShoppingCartIcon.tsx(21,23): error TS7006: Parameter 'total' implicitly has an 'any' type.
+src/components/ShoppingCartIcon.tsx(21,30): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/stores/cartStore.ts(1,58): error TS2307: Cannot find module '@/types' or its corresponding type declarations.
+src/stores/cartStore.ts(10,19): error TS7006: Parameter 'product' implicitly has an 'any' type.
+src/stores/cartStore.ts(11,14): error TS7006: Parameter 'state' implicitly has an 'any' type.
+src/stores/cartStore.ts(13,14): error TS7006: Parameter 'p' implicitly has an 'any' type.
+src/stores/cartStore.ts(33,24): error TS7006: Parameter 'product' implicitly has an 'any' type.
+src/stores/cartStore.ts(34,14): error TS7006: Parameter 'state' implicitly has an 'any' type.
+src/stores/cartStore.ts(35,36): error TS7006: Parameter 'item' implicitly has an 'any' type.
+ ELIFECYCLE  Command failed with exit code 2.

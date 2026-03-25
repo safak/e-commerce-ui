@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductType } from "@/types";
+import { ProductType } from "@repo/types";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
@@ -25,7 +25,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-[2/3]">
           <Image
-            src={product.images[0]}
+            src={(product.images as Record<string, string>)?.[0] || ""}
             alt={product.name}
             fill
             className="object-cover hover:scale-105 transition-all duration-300"

@@ -1,15 +1,19 @@
 {
-  "name": "ecomgithub",
+  "name": "client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack --port 3002",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.0.6",
     "@hookform/resolvers": "^5.2.2",
+    "@stripe/react-stripe-js": "^3.6.0",
+    "@stripe/stripe-js": "^7.0.0",
     "lucid": "^2.21.0",
     "lucide-react": "^0.577.0",
     "next": "15.4.5",
@@ -17,17 +21,18 @@
     "react-dom": "19.1.0",
     "react-hook-form": "^7.71.2",
     "react-toastify": "^11.0.5",
+    "stripe": "^20.4.1",
     "zod": "^4.3.6",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/types": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.4.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
