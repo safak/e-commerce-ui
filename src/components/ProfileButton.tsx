@@ -1,3 +1,4 @@
+"use client";
 import { UserButton } from "@clerk/nextjs";
 import { ShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";

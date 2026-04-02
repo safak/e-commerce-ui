@@ -17,6 +17,7 @@ const CheckoutForm = ({
 
   const handleClick = async () => {
     setLoading(true);
+    await checkout.updateEmail(shippingForm.email);
     await checkout.updateShippingAddress({
       name: "shipping_address",
       address: {

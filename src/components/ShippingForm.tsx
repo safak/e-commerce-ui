@@ -1,9 +1,7 @@
-"use client";
-
 import { ShippingFormInputs, shippingFormSchema } from "@repo/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const ShippingForm = ({
@@ -14,34 +12,15 @@ const ShippingForm = ({
   const {
     register,
     handleSubmit,
-    setError,
-    clearErrors,
     formState: { errors },
-  } = useForm<ShippingFormInputs>();
+  } = useForm<ShippingFormInputs>({
+    resolver: zodResolver(shippingFormSchema as any),
+  });
 
   const router = useRouter();
 
   const handleShippingForm: SubmitHandler<ShippingFormInputs> = (data) => {
-    clearErrors();
-
-    const result = shippingFormSchema.safeParse(data);
-
-    if (!result.success) {
-      for (const issue of result.error.issues) {
-        const fieldName = issue.path[0];
-
-        if (typeof fieldName === "string") {
-          setError(fieldName as keyof ShippingFormInputs, {
-            type: "manual",
-            message: issue.message,
-          });
-        }
-      }
-
-      return;
-    }
-
-    setShippingForm(result.data);
+    setShippingForm(data);
     router.push("/cart?step=3", { scroll: false });
   };
 
@@ -51,75 +30,86 @@ const ShippingForm = ({
       onSubmit={handleSubmit(handleShippingForm)}
     >
       <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-xs font-medium text-gray-500">
+        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
           Name
         </label>
         <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
           id="name"
-          className="border-b border-gray-200 py-2 text-sm outline-none"
           placeholder="John Doe"
           {...register("name")}
         />
         {errors.name && (
-          <p className="text-sm text-red-500">{errors.name.message}</p>
+          <p className="text-xs text-red-500">{errors.name.message}</p>
         )}
       </div>
-
       <div className="flex flex-col gap-1">
-        <label htmlFor="phone" className="text-xs font-medium text-gray-500">
+        <label htmlFor="email" className="text-xs text-gray-500 font-medium">
+          Email
+        </label>
+        <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
+          type="email"
+          id="email"
+          placeholder="johndoe@gmail.com"
+          {...register("email")}
+        />
+        {errors.email && (
+          <p className="text-xs text-red-500">{errors.email.message}</p>
+        )}
+      </div>
+      <div className="flex flex-col gap-1">
+        <label htmlFor="phone" className="text-xs text-gray-500 font-medium">
           Phone
         </label>
         <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
           id="phone"
-          className="border-b border-gray-200 py-2 text-sm outline-none"
-          placeholder="1234567890"
+          placeholder="123456789"
           {...register("phone")}
         />
         {errors.phone && (
-          <p className="text-sm text-red-500">{errors.phone.message}</p>
+          <p className="text-xs text-red-500">{errors.phone.message}</p>
         )}
       </div>
-
       <div className="flex flex-col gap-1">
-        <label htmlFor="address" className="text-xs font-medium text-gray-500">
+        <label htmlFor="address" className="text-xs text-gray-500 font-medium">
           Address
         </label>
         <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
           id="address"
-          className="border-b border-gray-200 py-2 text-sm outline-none"
-          placeholder="123 Abbey Road"
+          placeholder="123 Main St, Anytown"
           {...register("address")}
         />
         {errors.address && (
-          <p className="text-sm text-red-500">{errors.address.message}</p>
+          <p className="text-xs text-red-500">{errors.address.message}</p>
         )}
       </div>
-
       <div className="flex flex-col gap-1">
-        <label htmlFor="city" className="text-xs font-medium text-gray-500">
+        <label htmlFor="city" className="text-xs text-gray-500 font-medium">
           City
         </label>
         <input
+          className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
           id="city"
-          className="border-b border-gray-200 py-2 text-sm outline-none"
           placeholder="New York"
           {...register("city")}
         />
         {errors.city && (
-          <p className="text-sm text-red-500">{errors.city.message}</p>
+          <p className="text-xs text-red-500">{errors.city.message}</p>
         )}
       </div>
-
       <button
         type="submit"
-        className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-gray-800 p-2 text-white transition-all duration-300 hover:bg-gray-900"
+        className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2"
       >
         Continue
-        <ArrowRight className="h-3 w-3" />
+        <ArrowRight className="w-3 h-3" />
       </button>
     </form>
   );
