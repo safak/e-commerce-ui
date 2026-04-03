@@ -35,11 +35,37 @@ const fetchData = async ({
   search?: string;
   params: "homepage" | "products";
 }) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products?${category ? `category=${category}` : ""}${search ? `&search=${search}` : ""}&sort=${sort || "newest"}${params === "homepage" ? "&limits=8" : ""}`,
-  );
-  const data: ProductType[] = await res.json();
-  return data;
+  const baseUrl = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL?.trim();
+
+  if (!baseUrl) {
+    console.error("NEXT_PUBLIC_PRODUCT_SERVICE_URL is not configured.");
+    return [];
+  }
+
+  const query = new URLSearchParams({
+    sort: sort || "newest",
+  });
+
+  if (category) query.set("category", category);
+  if (search) query.set("search", search);
+  if (params === "homepage") query.set("limit", "8");
+
+  try {
+    const res = await fetch(`${baseUrl}/products?${query.toString()}`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      console.error(`Failed to fetch products: ${res.status} ${res.statusText}`);
+      return [];
+    }
+
+    const data: ProductType[] = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch products from product-service.", error);
+    return [];
+  }
 };
 
 const ProductList = async ({

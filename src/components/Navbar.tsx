@@ -3,7 +3,7 @@ import Image from "next/image";
 import SearchBar from "./SearchBar";
 import { Bell, Home, ShoppingCart } from "lucide-react";
 import ShoppingCartIcon from "./ShoppingCartIcon";
-import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { Show } from "@clerk/nextjs";
 import React from "react";
 import ProfileButton from "./ProfileButton";
 
@@ -32,7 +32,12 @@ const Navbar = () => {
         <Bell className="w-4 h-4 text-gray-600" />
         <ShoppingCartIcon />
         <Show when="signed-out">
-          <SignInButton />
+          <Link
+            href="/sign-in"
+            className="text-sm font-medium text-gray-700 hover:text-black"
+          >
+            Sign in
+          </Link>
         </Show>
         <Show when="signed-in">
           <ProfileButton />

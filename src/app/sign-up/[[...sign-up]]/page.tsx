@@ -1,10 +1,10 @@
-import { SignUp } from "@clerk/nextjs";
+import EmailSignUpForm from "@/components/auth/EmailSignUpForm";
 import React from "react";
 
 export default function Page() {
   return (
-    <div className="flex items-center justify-center mt-16">
-      <SignUp />
+    <div className="mt-16 flex items-center justify-center">
+      <EmailSignUpForm />
     </div>
   );
 }

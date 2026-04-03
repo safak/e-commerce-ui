@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+:root {
+  --font-geist-sans:
+    "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-geist-mono:
+    "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+body {
+  font-family: var(--font-geist-sans);
+}
