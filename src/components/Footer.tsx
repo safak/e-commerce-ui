@@ -13,13 +13,11 @@ const Footer = () => {
             height={36}
             className="w-6 h-6 md:w-9 md:h-9"
           />
-          <p className="hidden md:block font-medium tracking-wider">
-            TRENDLAMA.
-          </p>
+          <p className="hidden md:block font-medium tracking-wider">PULSE.</p>
         </Link>
 
         <p className="text-sm text-gray-400">
-          © {new Date().getFullYear()} TRENDLAMA.
+          © {new Date().getFullYear()} PULSE.
         </p>
         <p className="text-sm text-gray-400">All rights reserved.</p>
       </div>

@@ -12,9 +12,17 @@ const poppins = localFont({
     { path: "./fonts/Poppins-Regular.ttf", weight: "400", style: "normal" },
     { path: "./fonts/Poppins-Italic.ttf", weight: "400", style: "italic" },
     { path: "./fonts/Poppins-Medium.ttf", weight: "500", style: "normal" },
-    { path: "./fonts/Poppins-MediumItalic.ttf", weight: "500", style: "italic" },
+    {
+      path: "./fonts/Poppins-MediumItalic.ttf",
+      weight: "500",
+      style: "italic",
+    },
     { path: "./fonts/Poppins-SemiBold.ttf", weight: "600", style: "normal" },
-    { path: "./fonts/Poppins-SemiBoldItalic.ttf", weight: "600", style: "italic" },
+    {
+      path: "./fonts/Poppins-SemiBoldItalic.ttf",
+      weight: "600",
+      style: "italic",
+    },
     { path: "./fonts/Poppins-Bold.ttf", weight: "700", style: "normal" },
     { path: "./fonts/Poppins-BoldItalic.ttf", weight: "700", style: "italic" },
   ],
@@ -23,8 +31,8 @@ const poppins = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Quality engines",
-  description: "The machine you want",
+  title: "Pulse",
+  description: "High-end sportswear for the modern athlete",
 };
 
 export default function RootLayout({
