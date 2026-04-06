@@ -22,7 +22,7 @@ const Footer = () => {
         <p className="text-sm text-gray-400">All rights reserved.</p>
       </div>
       <div className="flex flex-col gap-4 text-sm text-gray-400 items-center md:items-start">
-        <Link href="/about" className="hover:underline">
+        <Link href="/" className="hover:underline">
           HomePage
         </Link>
         <Link href="/contact" className="hover:underline">
@@ -36,17 +36,14 @@ const Footer = () => {
         </Link>
       </div>
       <div className="flex flex-col gap-4 text-sm text-gray-400 items-center md:items-start">
-        <Link href="/about" className="hover:underline">
+        <Link href="/products" className="hover:underline">
           All Products
         </Link>
-        <Link href="/contact" className="hover:underline">
-          New Arrivals
-        </Link>
-        <Link href="/terms" className="hover:underline">
+        <Link
+          href="/products?limit=10&popular=true"
+          className="hover:underline"
+        >
           Best Sellers
-        </Link>
-        <Link href="/privacy" className="hover:underline">
-          Sale
         </Link>
       </div>
     </div>

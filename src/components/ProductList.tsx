@@ -26,11 +26,13 @@ import React from "react";
 
 const fetchData = async ({
   category,
+  popular,
   sort,
   search,
   params,
 }: {
   category?: string;
+  popular?: boolean;
   sort?: string;
   search?: string;
   params: "homepage" | "products";
@@ -49,6 +51,7 @@ const fetchData = async ({
   if (category) query.set("category", category);
   if (search) query.set("search", search);
   if (params === "homepage") query.set("limit", "8");
+  if (popular) query.set("popular", "true");
 
   try {
     const res = await fetch(`${baseUrl}/products?${query.toString()}`, {
@@ -71,15 +74,17 @@ const fetchData = async ({
 const ProductList = async ({
   category,
   params,
+  popular = false,
   sort,
   search,
 }: {
   category: string;
   sort?: string;
   search?: string;
+  popular?: boolean;
   params: "homepage" | "products";
 }) => {
-  const products = await fetchData({ category, sort, search, params });
+  const products = await fetchData({ category, popular, sort, search, params });
   return (
     <div className="w-full">
       <Categories />

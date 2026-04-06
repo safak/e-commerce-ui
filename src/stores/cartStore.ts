@@ -10,7 +10,10 @@ const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
       addToCart: (product) =>
         set((state) => {
           const existingProductIndex = state.cart.findIndex(
-            (p) => p.id === product.id,
+            (p) =>
+              p.id === product.id &&
+              p.selectedSize === product.selectedSize &&
+              p.selectedColor === product.selectedColor,
           );
 
           if (existingProductIndex !== -1) {
@@ -30,13 +33,22 @@ const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
               {
                 ...product,
                 quantity: product.quantity || 1,
+                selectedSize: product.selectedSize,
+                selectedColor: product.selectedColor,
               },
             ],
           };
         }),
       removeFromCart: (product) =>
         set((state) => ({
-          cart: state.cart.filter((item) => item.id !== product.id),
+          cart: state.cart.filter(
+            (item) =>
+              !(
+                item.id === product.id &&
+                item.selectedSize === product.selectedSize &&
+                item.selectedColor === product.selectedColor
+              ),
+          ),
         })),
       clearCart: () => set({ cart: [] }),
     }),

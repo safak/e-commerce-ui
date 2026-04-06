@@ -1,7 +1,27 @@
 import ProductInteraction from "@/components/ProductInteraction";
 import { ProductType } from "@repo/types";
 import Image from "next/image";
-import React from "react";
+
+// TEMPORARY
+// const product: ProductType = {
+//   id: 1,
+//   name: "Adidas CoreFit T-Shirt",
+//   shortDescription:
+//     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+//   description:
+//     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+//   price: 59.9,
+//   sizes: ["xs", "s", "m", "l", "xl"],
+//   colors: ["gray", "purple", "green"],
+//   images: {
+//     gray: "/products/1g.png",
+//     purple: "/products/1p.png",
+//     green: "/products/1gr.png",
+//   },
+//   categorySlug: "test",
+//   createdAt: new Date(),
+//   updatedAt: new Date(),
+// };
 
 const fetchProduct = async (id: string) => {
   const res = await fetch(
@@ -17,48 +37,53 @@ export const generateMetadata = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
-  const product = await fetchProduct(id);
 
+  const product = await fetchProduct(id);
   return {
     title: product.name,
-    description: product.description,
+    describe: product.description,
   };
 };
 
 const ProductPage = async ({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ color: string; size: string }>;
 }) => {
+  const { size, color } = await searchParams;
   const { id } = await params;
+
   const product = await fetchProduct(id);
-  const productImages = (product.images ?? {}) as Record<string, string>;
-  const productImage = productImages[id] || Object.values(productImages)[0] || "";
 
+  const selectedSize = size || (product.sizes[0] as string);
+  const selectedColor = color || (product.colors[0] as string);
   return (
-    <div className="mt-12 flex flex-col gap-4 md:gap-12 lg:flex-row">
-      <div className="relative aspect-[2/3] w-full lg:w-5/12">
-        {productImage ? (
-          <Image
-            src={productImage}
-            alt={product.name}
-            fill
-            className="rounded-md object-contain"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center rounded-md bg-gray-50 text-sm text-gray-400">
-            No image
-          </div>
-        )}
+    <div className="flex flex-col gap-4 lg:flex-row md:gap-12 mt-12">
+      {/* IMAGE */}
+      <div className="w-full lg:w-5/12 relative aspect-[2/3]">
+        <Image
+          src={
+            (product.images as Record<string, string>)?.[selectedColor] || ""
+          }
+          alt={product.name}
+          fill
+          className="object-contain rounded-md"
+        />
       </div>
-
-      <div className="w-full lg:w-7/12">
+      {/* DETAILS */}
+      <div className="w-full lg:w-7/12 flex flex-col gap-4">
         <h1 className="text-2xl font-medium">{product.name}</h1>
         <p className="text-gray-500">{product.description}</p>
         <h2 className="text-2xl font-semibold">${product.price.toFixed(2)}</h2>
-        <ProductInteraction product={product} />
-
-        <div className="mt-4 flex items-center gap-2">
+        <ProductInteraction
+          product={product}
+          selectedSize={selectedSize}
+          selectedColor={selectedColor}
+        />
+        {/* CARD INFO */}
+        <div className="flex items-center gap-2 mt-4">
           <Image
             src="/klarna.png"
             alt="klarna"
@@ -81,22 +106,13 @@ const ProductPage = async ({
             className="rounded-md"
           />
         </div>
-
-        <p className="text-xs text-gray-500">
+        <p className="text-gray-500 text-xs">
           By clicking Pay Now, you agree to our{" "}
-          <span className="cursor-pointer underline hover:text-black">
-            Terms & Conditions
-          </span>{" "}
-          and{" "}
-          <span className="cursor-pointer underline hover:text-black">
-            Privacy Policy
-          </span>
+          <span className="underline hover:text-black">Terms & Conditions</span>{" "}
+          and <span className="underline hover:text-black">Privacy Policy</span>
           . You authorize us to charge your selected payment method for the
           total amount shown. All sales are subject to our return and{" "}
-          <span className="cursor-pointer underline hover:text-black">
-            Refund Policies
-          </span>
-          .
+          <span className="underline hover:text-black">Refund Policies</span>.
         </p>
       </div>
     </div>
