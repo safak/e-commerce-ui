@@ -1,6 +1,7 @@
 import ProductInteraction from "@/components/ProductInteraction";
 import { ProductType } from "@repo/types";
 import Image from "next/image";
+import { currentUser } from "@clerk/nextjs/server";
 
 // TEMPORARY
 // const product: ProductType = {
@@ -55,10 +56,30 @@ const ProductPage = async ({
   const { size, color } = await searchParams;
   const { id } = await params;
 
-  const product = await fetchProduct(id);
+  const [product, user] = await Promise.all([fetchProduct(id), currentUser()]);
 
-  const selectedSize = size || (product.sizes[0] as string);
-  const selectedColor = color || (product.colors[0] as string);
+  if (!product) {
+    return (
+      <div className="mt-12 text-center text-gray-500">Product not found.</div>
+    );
+  }
+
+  const userSize = (
+    user?.publicMetadata as { sizeProfile?: { shoeSize?: number } }
+  )?.sizeProfile?.shoeSize;
+
+  function getRecommendedSize(userSize: number | undefined, sizes: string[]) {
+    if (!userSize) return null;
+    const numericSizes = sizes.map(Number);
+    const closest = numericSizes.reduce((prev, curr) =>
+      Math.abs(curr - userSize) < Math.abs(prev - userSize) ? curr : prev,
+    );
+    return Math.abs(closest - userSize) > 1 ? null : closest;
+  }
+
+  const recommendedSize = getRecommendedSize(userSize, product.sizes);
+  const selectedSize = size || recommendedSize?.toString() || product.sizes[0]!;
+  const selectedColor = color || product.colors[0]!;
   return (
     <div className="flex flex-col gap-4 lg:flex-row md:gap-12 mt-12">
       {/* IMAGE */}
@@ -81,6 +102,7 @@ const ProductPage = async ({
           product={product}
           selectedSize={selectedSize}
           selectedColor={selectedColor}
+          recommendedSize={recommendedSize}
         />
         {/* CARD INFO */}
         <div className="flex items-center gap-2 mt-4">

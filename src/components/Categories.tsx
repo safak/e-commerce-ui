@@ -58,11 +58,17 @@ const Categories = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const selectedCategory = searchParams.get("category");
+  const selectedCategory = searchParams.get("category") || "all";
 
   const handleChange = (value: string | null) => {
     const params = new URLSearchParams(searchParams);
-    params.set("category", value || "all");
+
+    if (!value || value === "all") {
+      params.delete("category");
+    } else {
+      params.set("category", value);
+    }
+
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
