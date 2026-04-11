@@ -17,9 +17,12 @@ const ProductCard = ({ product }: { product: ProductType }) => {
     sizeProfile?: SizeProfile;
   };
 
-  const userSize = metadata?.sizeProfile?.shoeSize;
+  const { shoeSize, height, weight } = metadata?.sizeProfile ?? {};
 
-  function getRecommendedSize(userSize: number | undefined, sizes: string[]) {
+  function getRecommendedShoeSize(
+    userSize: number | undefined,
+    sizes: string[],
+  ): string | null {
     if (!userSize) return null;
 
     const numericSizes = sizes.map(Number);
@@ -32,11 +35,47 @@ const ProductCard = ({ product }: { product: ProductType }) => {
       return null;
     }
 
-    return closest;
+    return closest.toString();
   }
 
-  const recommendedSize = getRecommendedSize(userSize, product.sizes);
-  const defaultSize = recommendedSize?.toString() || product.sizes[0]!;
+  function getRecommendedClothingSize(
+    height: number | undefined,
+    weight: number | undefined,
+    sizes: string[],
+  ): string | null {
+    if (!height || !weight) return null;
+
+    const bmi = weight / (height / 100) ** 2;
+
+    // 标准亚洲尺码对照（可按你的实际 sizes 调整）
+    const getSizeLabel = (): string => {
+      if (height < 160) {
+        if (bmi < 18.5) return "XS";
+        if (bmi < 23) return "S";
+        if (bmi < 27) return "M";
+        return "L";
+      } else if (height < 170) {
+        if (bmi < 18.5) return "s";
+        if (bmi < 23) return "m";
+        if (bmi < 27) return "l";
+        return "XL";
+      } else {
+        if (bmi < 18.5) return "m";
+        if (bmi < 23) return "l";
+        if (bmi < 27) return "xl";
+        return "XXL";
+      }
+    };
+    const recommended = getSizeLabel();
+    // 检查该尺码是否在商品的 sizes 列表里
+    return sizes.includes(recommended) ? recommended : null;
+  }
+
+  const recommendedSize =
+    product.categorySlug === "shoes"
+      ? getRecommendedShoeSize(shoeSize, product.sizes)
+      : getRecommendedClothingSize(height, weight, product.sizes);
+  const defaultSize = recommendedSize ?? product.sizes[0]!;
   const [productTypes, setProductTypes] = useState({
     size: defaultSize,
     color: product.colors[0]!,
@@ -53,23 +92,6 @@ const ProductCard = ({ product }: { product: ProductType }) => {
   const selectedSize = isSizeManuallySelected ? productTypes.size : defaultSize;
 
   const { addToCart } = useCartStore();
-
-  const handleProductType = ({
-    type,
-    value,
-  }: {
-    type: "size" | "color";
-    value: string;
-  }) => {
-    if (type === "size") {
-      setIsSizeManuallySelected(true);
-    }
-
-    setProductTypes((prev) => ({
-      ...prev,
-      [type]: value,
-    }));
-  };
 
   const handleAddToCart = () => {
     addToCart({

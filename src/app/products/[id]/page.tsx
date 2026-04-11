@@ -64,21 +64,57 @@ const ProductPage = async ({
     );
   }
 
-  const userSize = (
-    user?.publicMetadata as { sizeProfile?: { shoeSize?: number } }
-  )?.sizeProfile?.shoeSize;
+  const sizeProfile = (
+    user?.publicMetadata as {
+      sizeProfile?: {
+        shoeSize?: number;
+        height?: number;
+        weight?: number;
+      };
+    }
+  )?.sizeProfile;
 
-  function getRecommendedSize(userSize: number | undefined, sizes: string[]) {
+  function getRecommendedShoeSize(
+    userSize: number | undefined,
+    sizes: string[],
+  ): string | null {
     if (!userSize) return null;
     const numericSizes = sizes.map(Number);
     const closest = numericSizes.reduce((prev, curr) =>
       Math.abs(curr - userSize) < Math.abs(prev - userSize) ? curr : prev,
     );
-    return Math.abs(closest - userSize) > 1 ? null : closest;
+    return Math.abs(closest - userSize) > 1 ? null : closest.toString();
   }
 
-  const recommendedSize = getRecommendedSize(userSize, product.sizes);
-  const selectedSize = size || recommendedSize?.toString() || product.sizes[0]!;
+  function getRecommendedClothingSize(
+    height: number | undefined,
+    weight: number | undefined,
+    sizes: string[],
+  ): string | null {
+    if (!height || !weight) return null;
+    const bmi = weight / (height / 100) ** 2;
+
+    let recommended: string;
+    if (height < 160) {
+      recommended = bmi < 18.5 ? "xs" : bmi < 23 ? "s" : bmi < 27 ? "m" : "l";
+    } else if (height < 170) {
+      recommended = bmi < 18.5 ? "s" : bmi < 23 ? "m" : bmi < 27 ? "l" : "xl";
+    } else {
+      recommended = bmi < 18.5 ? "m" : bmi < 23 ? "l" : "xl";
+    }
+
+    return sizes.includes(recommended) ? recommended : null;
+  }
+
+  const recommendedSize: string | null =
+    product.categorySlug === "shoes"
+      ? getRecommendedShoeSize(sizeProfile?.shoeSize, product.sizes)
+      : getRecommendedClothingSize(
+          sizeProfile?.height,
+          sizeProfile?.weight,
+          product.sizes,
+        );
+  const selectedSize = size || recommendedSize || product.sizes[0]!;
   const selectedColor = color || product.colors[0]!;
   return (
     <div className="flex flex-col gap-4 lg:flex-row md:gap-12 mt-12">

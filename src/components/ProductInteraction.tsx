@@ -16,7 +16,7 @@ const ProductInteraction = ({
   product: ProductType;
   selectedSize: string;
   selectedColor: string;
-  recommendedSize?: number | null;
+  recommendedSize?: string | null;
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -52,12 +52,12 @@ const ProductInteraction = ({
   };
 
   useEffect(() => {
-    if (!searchParams.get("size") && recommendedSize != null) {
+    if (recommendedSize != null) {
       const params = new URLSearchParams(searchParams.toString());
-      params.set("size", String(recommendedSize));
+      params.set("size", recommendedSize);
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
-  }, []);
+  }, [recommendedSize]); // 依赖 recommendedSize，而不是空数组
   return (
     <div className="flex flex-col gap-4 mt-4">
       {/* SIZE */}
@@ -75,10 +75,10 @@ const ProductInteraction = ({
               <div
                 className={`w-6 h-6 text-center flex items-center justify-center ${
                   selectedSize === s
-                    ? String(recommendedSize) === s
+                    ? recommendedSize === s
                       ? "bg-amber-400 text-white" // 既选中又是推荐
                       : "bg-black text-white" // 只是选中
-                    : String(recommendedSize) === s
+                    : recommendedSize === s
                       ? "bg-amber-400 text-white" // 只是推荐
                       : "bg-white text-black" // 普通
                 }`}
