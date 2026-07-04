@@ -1,0 +1,4 @@
+
+> client@0.1.0 check-types C:\Users\23660\ECOM\microservices-ecommerce\apps\client
+> tsc --noEmit
+

@@ -1,0 +1,109 @@
+import { ProductType } from "@repo/types";
+import ProductCard from "./ProductCard";
+import Link from "next/link";
+import Categories from "./Categories";
+import Filter from "./Filter";
+import React from "react";
+
+// const products: ProductType[] = [
+//   {
+//     id: 1,
+//     name: "iPhone 13 Pro",
+//     shortDescription: "The latest iPhone with A15 Bionic chip",
+//     description:
+//       "The iPhone 13 Pro features a 6.1-inch Super Retina XDR display, A15 Bionic chip, Pro camera system with Night mode, and up to 22 hours of battery life.",
+//     price: 999,
+//     images: {
+//       0: "/products/1g.png",
+//       1: "/products/1p.png",
+//       2: "/products/1gr.png",
+//     },
+//     categorySlug: "test",
+//     createdAt: new Date(),
+//     updatedAt: new Date(),
+//   },
+// ];
+
+const fetchData = async ({
+  category,
+  popular,
+  sort,
+  search,
+  params,
+}: {
+  category?: string;
+  popular?: boolean;
+  sort?: string;
+  search?: string;
+  params: "homepage" | "products";
+}) => {
+  const baseUrl = process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL?.trim();
+
+  if (!baseUrl) {
+    console.error("NEXT_PUBLIC_PRODUCT_SERVICE_URL is not configured.");
+    return [];
+  }
+
+  const query = new URLSearchParams({
+    sort: sort || "newest",
+  });
+
+  if (category && category !== "all") query.set("category", category);
+  if (search) query.set("search", search);
+  if (params === "homepage") query.set("limit", "8");
+  if (popular) query.set("popular", "true");
+
+  try {
+    const res = await fetch(`${baseUrl}/products?${query.toString()}`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      console.error(
+        `Failed to fetch products: ${res.status} ${res.statusText}`,
+      );
+      return [];
+    }
+
+    const data: ProductType[] = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch products from product-service.", error);
+    return [];
+  }
+};
+
+const ProductList = async ({
+  category,
+  params,
+  popular = false,
+  sort,
+  search,
+}: {
+  category: string;
+  sort?: string;
+  search?: string;
+  popular?: boolean;
+  params: "homepage" | "products";
+}) => {
+  const products = await fetchData({ category, popular, sort, search, params });
+  return (
+    <div className="w-full">
+      <Categories />
+      {params === "products" && <Filter />}
+      <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {products.map((product) => {
+          return <ProductCard key={product.id} product={product} />;
+        })}
+      </div>
+      <Link
+        href={category ? `/products?category=${category}` : "/products"}
+        className="flex justify-end mt-4 text-gray-500 text-sm hover:underline"
+      >
+        View all products
+      </Link>
+    </div>
+  );
+};
+
+export default ProductList;
