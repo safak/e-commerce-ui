@@ -49,7 +49,10 @@ const useCartStore = create<CartStoreStateType & CartStoreActionsType>()(
     }),
     {
       name: "cart",
-      storage: createJSONStorage(() => localStorage),
+      storage:
+        typeof window !== "undefined"
+          ? createJSONStorage(() => localStorage)
+          : undefined,
       onRehydrateStorage: () => (state) => {
         if (state) {
           state.hasHydrated = true;

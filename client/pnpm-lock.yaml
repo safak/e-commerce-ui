@@ -40,7 +40,7 @@ importers:
         specifier: ^3
         version: 3.3.1
       '@tailwindcss/postcss':
-        specifier: '@hookform/resolvers/zod'
+        specifier: ^4
         version: 4.1.11
       '@types/node':
         specifier: ^20
